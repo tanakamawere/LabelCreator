@@ -11,6 +11,7 @@ namespace LabelCreator
     public partial class MainPageViewModel
     {
         public ObservableRangeCollection<string> Subjects { get; set; } = new();
+        public ObservableRangeCollection<LineStyle> LineStyles { get; set; } = new();
 
         [ObservableProperty]
         private string subject;
@@ -32,12 +33,18 @@ namespace LabelCreator
         int fontSize = 24;
         [ObservableProperty]
         bool isBold = true;
+        [ObservableProperty]
+        bool hasTitles = true;
+        [ObservableProperty]
+        float rectangleWidth = 1;
+        [ObservableProperty]
+        Syncfusion.DocIO.DLS.LineStyle selectedLineStyle = LineStyle.Single;
+
 
         public MainPageViewModel()
         {
-
+            LineStyles.AddRange(Enum.GetNames(typeof(LineStyle)).Cast<LineStyle>());
         }
-
 
         [RelayCommand]
         void SaveDocumentClicked()
@@ -64,7 +71,6 @@ namespace LabelCreator
         [RelayCommand]
         void DeleteSubject(string subjectSelected) =>
             Subjects.Remove(subjectSelected);
-
         private MemoryStream CreateDocument()
         {
             //Creates a new document.
@@ -110,11 +116,25 @@ namespace LabelCreator
             //Adds new paragraph to the section
             WParagraph paragraph = section.AddParagraph() as WParagraph;
             //Adds new shape to the document
+            //
             Shape rectangle = paragraph.AppendShape(AutoShapeType.Rectangle, 572, boxHeight);
             //Sets position for shape
             rectangle.VerticalPosition = verticalPositionOfNextBox;
             rectangle.HorizontalPosition = 0;
+
+            //Formating the rectangle
+            rectangle.LineFormat.Style = SelectedLineStyle;
+        
+            //Set rectangle width to 4 so that the border styles are visible
+            if (rectangle.LineFormat.Style != LineStyle.Single)
+                rectangleWidth = 4;
+
+            rectangle.LineFormat.Weight = rectangleWidth;
+
             _ = section.AddParagraph() as WParagraph;
+
+
+
             //Adds textbody contents to the shape
             paragraph = rectangle.TextBody.AddParagraph() as WParagraph;
             IWTextRange text1 = paragraph.AppendText($"Name:            {Name}");

@@ -109,6 +109,7 @@
                             <RoundRectangle CornerRadius="20" />
                         </Border.StrokeShape>
                         <VerticalStackLayout>
+                            <!--  Font Size  -->
                             <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
                                 <Label VerticalOptions="Center">
                                     <Label.FormattedText>
@@ -119,15 +120,17 @@
                                     </Label.FormattedText>
                                 </Label>
                                 <Stepper
-                                    Maximum="30"
-                                    Minimum="22"
+                                    Maximum="40"
+                                    Minimum="12"
                                     VerticalOptions="Center"
                                     Value="{Binding FontSize}" />
                             </HorizontalStackLayout>
+                            <!--  Font Bold  -->
                             <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
                                 <Label Text="Bold Text" />
                                 <Switch IsToggled="{Binding IsBold}" />
                             </HorizontalStackLayout>
+                            <!--  Font  -->
                             <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
                                 <Label Text="Font" />
                                 <Picker Title="Select a font" SelectedItem="{Binding FontSelected}">
@@ -135,10 +138,23 @@
                                         <x:Array Type="{x:Type x:String}">
                                             <x:String>Times New Roman</x:String>
                                             <x:String>Calibri</x:String>
-                                            <x:String>Arial</x:String>
+                                            <x:String>Century Gothic</x:String>
                                         </x:Array>
                                     </Picker.ItemsSource>
                                 </Picker>
+                            </HorizontalStackLayout>
+                            <!--  Titles  -->
+                            <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
+                                <Label Text="Show Titles" />
+                                <Switch IsToggled="{Binding HasTitles}" />
+                            </HorizontalStackLayout>
+                            <!--  Line style  -->
+                            <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
+                                <Label Text="Line Style" />
+                                <Picker
+                                    Title="Select a line style"
+                                    ItemsSource="{Binding LineStyles}"
+                                    SelectedItem="{Binding SelectedLineStyle}" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Border>
