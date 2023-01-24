@@ -104,7 +104,7 @@
                         HorizontalOptions="Start"
                         Text="Label Formatting"
                         VerticalOptions="Center" />
-                    <Border Padding="20" BackgroundColor="{StaticResource WindowsGrayDark}">
+                    <Border Padding="20">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20" />
                         </Border.StrokeShape>
@@ -143,11 +143,6 @@
                                     </Picker.ItemsSource>
                                 </Picker>
                             </HorizontalStackLayout>
-                            <!--  Titles  -->
-                            <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
-                                <Label Text="Show Titles" />
-                                <Switch IsToggled="{Binding HasTitles}" />
-                            </HorizontalStackLayout>
                             <!--  Line style  -->
                             <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
                                 <Label Text="Line Style" />
@@ -155,6 +150,11 @@
                                     Title="Select a line style"
                                     ItemsSource="{Binding LineStyles}"
                                     SelectedItem="{Binding SelectedLineStyle}" />
+                            </HorizontalStackLayout>
+                            <!--  Year  -->
+                            <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
+                                <Label Text="Show Year" />
+                                <Switch IsToggled="{Binding HasYear}" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Border>
@@ -171,7 +171,7 @@
                         HorizontalOptions="Start"
                         Text="Student Details"
                         VerticalOptions="Center" />
-                    <Border Padding="20" BackgroundColor="{StaticResource WindowsGrayDark}">
+                    <Border Padding="20">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20" />
                         </Border.StrokeShape>

@@ -11,7 +11,7 @@ namespace LabelCreator
     public partial class MainPageViewModel
     {
         public ObservableRangeCollection<string> Subjects { get; set; } = new();
-        public ObservableRangeCollection<LineStyle> LineStyles { get; set; } = new();
+        public ObservableRangeCollection<string> LineStyles { get; set; } = new();
 
         [ObservableProperty]
         private string subject;
@@ -34,16 +34,16 @@ namespace LabelCreator
         [ObservableProperty]
         bool isBold = true;
         [ObservableProperty]
-        bool hasTitles = true;
-        [ObservableProperty]
         float rectangleWidth = 1;
         [ObservableProperty]
-        Syncfusion.DocIO.DLS.LineStyle selectedLineStyle = LineStyle.Single;
-
+        string selectedLineStyle = "Single";
+        [ObservableProperty]
+        bool hasYear = false;
+        int numberOfLabelsPerPage = 3;
 
         public MainPageViewModel()
         {
-            LineStyles.AddRange(Enum.GetNames(typeof(LineStyle)).Cast<LineStyle>());
+            LineStyles.AddRange(Enum.GetNames(typeof(LineStyle)));
         }
 
         [RelayCommand]
@@ -77,11 +77,19 @@ namespace LabelCreator
             using WordDocument document = new();
 
             WSection section = SectionInstance(document);
-            boxHeight = ((float)fontSize * 4) + 100;
+
+            int labelDetails = 3;
+            if (HasYear == true)
+                labelDetails = 4;
+
+            boxHeight = ((float)fontSize * labelDetails) + 75;
+
+            if (fontSize > 30)
+                numberOfLabelsPerPage = 2;
 
             foreach (string item in Subjects)
             {
-                if (numberOfLabels.Equals(3))
+                if (numberOfLabels.Equals(numberOfLabelsPerPage))
                 {
                     section = SectionInstance(document);
                     section.BreakCode = SectionBreakCode.NewPage;
@@ -100,7 +108,7 @@ namespace LabelCreator
             ms.Position = 0;
             return ms;
         }
-        WSection SectionInstance(WordDocument document)
+        static WSection SectionInstance(WordDocument document)
         {
             WSection section = document.AddSection() as WSection;
             //Sets Margin of the section.
@@ -123,30 +131,34 @@ namespace LabelCreator
             rectangle.HorizontalPosition = 0;
 
             //Formating the rectangle
-            rectangle.LineFormat.Style = SelectedLineStyle;
+            rectangle.LineFormat.Style = (LineStyle)Enum.Parse(typeof(LineStyle), SelectedLineStyle);
         
             //Set rectangle width to 4 so that the border styles are visible
             if (rectangle.LineFormat.Style != LineStyle.Single)
-                rectangleWidth = 4;
+                rectangleWidth = 5;
 
             rectangle.LineFormat.Weight = rectangleWidth;
 
             _ = section.AddParagraph() as WParagraph;
 
-
+            IWTextRange text1, text2, text3, text4 = paragraph.AppendText("");
 
             //Adds textbody contents to the shape
             paragraph = rectangle.TextBody.AddParagraph() as WParagraph;
-            IWTextRange text1 = paragraph.AppendText($"Name:            {Name}");
+            text1 = paragraph.AppendText(Name);
             paragraph.AppendBreak(BreakType.LineBreak);
             paragraph.AppendBreak(BreakType.LineBreak);
-            IWTextRange text2 = paragraph.AppendText($"Subject:         {item}");
+            text2 = paragraph.AppendText(item);
             paragraph.AppendBreak(BreakType.LineBreak);
             paragraph.AppendBreak(BreakType.LineBreak);
-            IWTextRange text3 = paragraph.AppendText($"Class:           {ClassTitle}");
-            paragraph.AppendBreak(BreakType.LineBreak);
-            paragraph.AppendBreak(BreakType.LineBreak);
-            IWTextRange text4 = paragraph.AppendText($"Year:            {DateTime.Now.Year}");
+            text3 = paragraph.AppendText(ClassTitle);
+
+            if (hasYear == true)
+            {
+                paragraph.AppendBreak(BreakType.LineBreak);
+                paragraph.AppendBreak(BreakType.LineBreak);
+                text4 = paragraph.AppendText(DateTime.Now.Year.ToString());
+            }
 
             //Text Attributes
             text1.CharacterFormat.Bold = IsBold;
