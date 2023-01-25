@@ -12,7 +12,8 @@
     </Style>
 
     <Style TargetType="Border">
-        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource WindowsGrayDark}, Dark={StaticResource WindowsGrayDark}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource WindowsGrayLight}, Dark={StaticResource WindowsDark}}" />
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray100}}" />
         <Setter Property="StrokeShape" Value="Rectangle" />
         <Setter Property="StrokeThickness" Value="1" />
     </Style>
@@ -371,7 +372,7 @@
 
     <Style ApplyToDerivedTypes="True" TargetType="Page">
         <Setter Property="Padding" Value="0" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource WindowsDark}}" />
     </Style>
 
     <Style ApplyToDerivedTypes="True" TargetType="Shell">

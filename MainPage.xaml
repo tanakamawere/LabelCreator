@@ -3,216 +3,190 @@
     x:Class="LabelCreator.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:LabelCreator"
     x:DataType="vm:MainPageViewModel">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1000*" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+    <VerticalStackLayout Spacing="10">
+        <!--  Output Box  -->
+        <Border Padding="20">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20" />
+            </Border.StrokeShape>
+            <VerticalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Header"
+                    HorizontalOptions="Start"
+                    Text="Output"
+                    VerticalOptions="Center" />
+                <Label Margin="5">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Name: " />
+                            <Span Text="{Binding Name}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label Margin="5">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Class: " />
+                            <Span Text="{Binding ClassTitle}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <CollectionView Margin="5" ItemsSource="{Binding Subjects}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="3" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.EmptyView>
+                        <ContentView>
+                            <VerticalStackLayout>
+                                <Image
+                                    Aspect="AspectFit"
+                                    MaximumWidthRequest="300"
+                                    Source="no_data.svg" />
+                                <Label Text="No subjects entered yet..." />
+                            </VerticalStackLayout>
+                        </ContentView>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border MaximumWidthRequest="300">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10" />
+                                </Border.StrokeShape>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=DeleteSubjectCommand}" CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <Label Margin="5" Text="{Binding .}" />
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </Border>
 
-        <!--  Left Panel  -->
-        <VerticalStackLayout Margin="20,0,0,0">
-            <Label
-                Grid.Column="0"
-                Margin="20"
-                FontAttributes="Bold"
-                FontSize="22"
-                HorizontalOptions="Start"
-                Text="Output Panel"
-                VerticalOptions="Center" />
-            <Border Padding="20">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="20" />
-                </Border.StrokeShape>
-                <VerticalStackLayout>
-                    <Label Margin="10" FontSize="{Binding FontSize}">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="Name: " />
-                                <Span Text="{Binding Name}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                    <Label Margin="10" FontSize="{Binding FontSize}">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="Class: " />
-                                <Span Text="{Binding ClassTitle}" />
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                    <CollectionView Margin="10" ItemsSource="{Binding Subjects}">
-                        <CollectionView.ItemsLayout>
-                            <GridItemsLayout Orientation="Vertical" Span="3" />
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.EmptyView>
-                            <ContentView>
-                                <VerticalStackLayout>
-                                    <Image
-                                        Aspect="AspectFit"
-                                        MaximumWidthRequest="300"
-                                        Source="no_data.svg" />
-                                    <Label Text="No subjects entered yet..." />
-                                </VerticalStackLayout>
-                            </ContentView>
-                        </CollectionView.EmptyView>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Border MaximumWidthRequest="300">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="10" />
-                                    </Border.StrokeShape>
-                                    <Border.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=DeleteSubjectCommand}" CommandParameter="{Binding .}" />
-                                    </Border.GestureRecognizers>
-                                    <Label
-                                        Margin="5"
-                                        FontSize="24"
-                                        Text="{Binding .}" />
-                                </Border>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </VerticalStackLayout>
-            </Border>
-
-            <Label>
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="Created by: Tanaka Mawere © " />
-                        <Span Text="WhatsApp: +263785468923 " />
-                        <Span Text="Email: tanakamawere@outlook.com" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
-        </VerticalStackLayout>
-
-        <!--  Right Side Panel  -->
-        <ScrollView Grid.Column="1" Orientation="Vertical">
+        <ScrollView Orientation="Vertical">
             <VerticalStackLayout
-                Margin="20"
+                Margin="10"
                 HorizontalOptions="Center"
-                Spacing="20">
+                Spacing="5">
                 <!--  Label Formatting  -->
-                <VerticalStackLayout>
-                    <Label
-                        Margin="20"
-                        FontAttributes="Bold"
-                        FontSize="22"
-                        HorizontalOptions="Start"
-                        Text="Label Formatting"
-                        VerticalOptions="Center" />
-                    <Border Padding="20">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="20" />
-                        </Border.StrokeShape>
-                        <VerticalStackLayout>
-                            <!--  Font Size  -->
-                            <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
-                                <Label VerticalOptions="Center">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span Text="Font Size: " />
-                                            <Span Text="{Binding FontSize}" />
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-                                <Stepper
-                                    Maximum="40"
-                                    Minimum="12"
-                                    VerticalOptions="Center"
-                                    Value="{Binding FontSize}" />
-                            </HorizontalStackLayout>
-                            <!--  Font Bold  -->
-                            <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
-                                <Label Text="Bold Text" />
-                                <Switch IsToggled="{Binding IsBold}" />
-                            </HorizontalStackLayout>
-                            <!--  Font  -->
-                            <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
-                                <Label Text="Font" />
-                                <Picker Title="Select a font" SelectedItem="{Binding FontSelected}">
-                                    <Picker.ItemsSource>
-                                        <x:Array Type="{x:Type x:String}">
-                                            <x:String>Times New Roman</x:String>
-                                            <x:String>Calibri</x:String>
-                                            <x:String>Century Gothic</x:String>
-                                        </x:Array>
-                                    </Picker.ItemsSource>
-                                </Picker>
-                            </HorizontalStackLayout>
-                            <!--  Line style  -->
-                            <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
-                                <Label Text="Line Style" />
-                                <Picker
-                                    Title="Select a line style"
-                                    ItemsSource="{Binding LineStyles}"
-                                    SelectedItem="{Binding SelectedLineStyle}" />
-                            </HorizontalStackLayout>
-                            <!--  Year  -->
-                            <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
-                                <Label Text="Show Year" />
-                                <Switch IsToggled="{Binding HasYear}" />
-                            </HorizontalStackLayout>
-                        </VerticalStackLayout>
-                    </Border>
-                </VerticalStackLayout>
+                <toolkit:Expander>
+                    <toolkit:Expander.Header>
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="Header"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Customise label appearance" />
+                                    <Span Text="&gt;" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </toolkit:Expander.Header>
 
+                    <VerticalStackLayout>
+                        <Border Padding="20">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+                            <VerticalStackLayout>
+                                <!--  Font Size  -->
+                                <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
+                                    <Label VerticalOptions="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Font Size: " />
+                                                <Span Text="{Binding FontSize}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Stepper
+                                        Maximum="40"
+                                        Minimum="12"
+                                        VerticalOptions="Center"
+                                        Value="{Binding FontSize}" />
+                                </HorizontalStackLayout>
+                                <!--  Font Bold  -->
+                                <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
+                                    <Label Text="Bold Text" />
+                                    <Switch IsToggled="{Binding IsBold}" />
+                                </HorizontalStackLayout>
+                                <!--  Font  -->
+                                <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
+                                    <Label Text="Font" />
+                                    <Picker
+                                        Title="Select a font"
+                                        ItemsSource="{Binding Fonts}"
+                                        SelectedItem="{Binding FontSelected}" />
+                                </HorizontalStackLayout>
+                                <!--  Line style  -->
+                                <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
+                                    <Label Text="Line Style" />
+                                    <Picker
+                                        Title="Select a line style"
+                                        ItemsSource="{Binding LineStyles}"
+                                        SelectedItem="{Binding SelectedLineStyle}" />
+                                </HorizontalStackLayout>
+                                <!--  Year  -->
+                                <HorizontalStackLayout Spacing="20" VerticalOptions="Center">
+                                    <Label Text="Show Year" />
+                                    <Switch IsToggled="{Binding HasYear}" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </toolkit:Expander>
 
                 <!--  Student Details  -->
+                <Border Padding="20">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Spacing="20">
+                        <Entry
+                            HorizontalOptions="Center"
+                            Placeholder="Enter name"
+                            ReturnCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=AddSubjectCommand}"
+                            ReturnCommandParameter="{Binding .}"
+                            Text="{Binding Name}"
+                            WidthRequest="200" />
+                        <Entry
+                            HorizontalOptions="Center"
+                            Placeholder="Enter class"
+                            Text="{Binding ClassTitle}"
+                            WidthRequest="200" />
 
-                <VerticalStackLayout>
-                    <Label
-                        Margin="20"
-                        FontAttributes="Bold"
-                        FontSize="22"
-                        HorizontalOptions="Start"
-                        Text="Student Details"
-                        VerticalOptions="Center" />
-                    <Border Padding="20">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="20" />
-                        </Border.StrokeShape>
-                        <VerticalStackLayout Spacing="20">
+                        <HorizontalStackLayout>
                             <Entry
                                 HorizontalOptions="Center"
-                                Placeholder="Enter name"
-                                ReturnCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=AddSubjectCommand}"
-                                ReturnCommandParameter="{Binding .}"
-                                Text="{Binding Name}"
-                                WidthRequest="200" />
-                            <Entry
+                                Placeholder="Enter subject"
+                                Text="{Binding Subject}"
+                                WidthRequest="300" />
+                            <Button Command="{Binding AddSubjectCommand}" Text="Add" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout HorizontalOptions="Center">
+                            <Button
+                                Command="{Binding ClearCommand}"
                                 HorizontalOptions="Center"
-                                Placeholder="Enter class"
-                                Text="{Binding ClassTitle}"
-                                WidthRequest="200" />
-
-                            <HorizontalStackLayout>
-                                <Entry
-                                    HorizontalOptions="Center"
-                                    Placeholder="Enter subject"
-                                    Text="{Binding Subject}"
-                                    WidthRequest="300" />
-                                <Button Command="{Binding AddSubjectCommand}" Text="Add" />
-                            </HorizontalStackLayout>
-
-                            <HorizontalStackLayout HorizontalOptions="Center">
-                                <Button
-                                    Command="{Binding ClearCommand}"
-                                    HorizontalOptions="Center"
-                                    Text="Clear" />
-                                <Button
-                                    Command="{Binding SaveDocumentClickedCommand}"
-                                    HorizontalOptions="Center"
-                                    SemanticProperties.Hint="Counts the number of times you click"
-                                    Text="Save Word Document" />
-                            </HorizontalStackLayout>
-                        </VerticalStackLayout>
-                    </Border>
-                </VerticalStackLayout>
+                                Text="Clear" />
+                            <Button
+                                Command="{Binding SaveDocumentClickedCommand}"
+                                HorizontalOptions="Center"
+                                SemanticProperties.Hint="Counts the number of times you click"
+                                Text="Save Word Document" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
             </VerticalStackLayout>
         </ScrollView>
-    </Grid>
+    </VerticalStackLayout>
+
+
 </ContentPage>
