@@ -1,5 +1,6 @@
 using Android.Content;
 using Android.OS;
+using CommunityToolkit.Maui.Alerts;
 using Java.IO;
 using System;
 using System.IO;
@@ -16,12 +17,12 @@ namespace LabelCreator.Services
 
             if (Android.OS.Environment.IsExternalStorageEmulated)
             {
-                root = Android.App.Application.Context!.GetExternalFilesDir(Android.OS.Environment.DirectoryDownloads)!.AbsolutePath;
+                root = Android.App.Application.Context!.GetExternalFilesDir(Android.OS.Environment.DirectoryDocuments)!.AbsolutePath;
             }
             else
                 root = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
 
-            Java.IO.File myDir = new(root + "/Syncfusion");
+            Java.IO.File myDir = new(root);
             myDir.Mkdir();
 
             Java.IO.File file = new(myDir, filename);
@@ -45,26 +46,31 @@ namespace LabelCreator.Services
             }
             if (file.Exists())
             {
-
-                if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.N)
+                try
                 {
-                    var fileUri = AndroidX.Core.Content.FileProvider.GetUriForFile(Android.App.Application.Context, Android.App.Application.Context.PackageName + ".provider", file);
-                    var intent = new Intent(Intent.ActionView);
-                    intent.SetData(fileUri);
-                    intent.AddFlags(ActivityFlags.NewTask);
-                    intent.AddFlags(ActivityFlags.GrantReadUriPermission);
-                    Android.App.Application.Context.StartActivity(intent);
+                    if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.N)
+                    {
+                        var fileUri = AndroidX.Core.Content.FileProvider.GetUriForFile(Android.App.Application.Context, Android.App.Application.Context.PackageName + ".provider", file);
+                        var intent = new Intent(Intent.ActionView);
+                        intent.SetData(fileUri);
+                        intent.AddFlags(ActivityFlags.NewTask);
+                        intent.AddFlags(ActivityFlags.GrantReadUriPermission);
+                        Android.App.Application.Context.StartActivity(intent);
+                    }
+                    else
+                    {
+                        var fileUri = Android.Net.Uri.Parse(file.AbsolutePath);
+                        var intent = new Intent(Intent.ActionView);
+                        intent.SetDataAndType(fileUri, contentType);
+                        intent = Intent.CreateChooser(intent, "Open File");
+                        intent!.AddFlags(ActivityFlags.NewTask);
+                        Android.App.Application.Context.StartActivity(intent);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    var fileUri = Android.Net.Uri.Parse(file.AbsolutePath);
-                    var intent = new Intent(Intent.ActionView);
-                    intent.SetDataAndType(fileUri, contentType);
-                    intent = Intent.CreateChooser(intent, "Open File");
-                    intent!.AddFlags(ActivityFlags.NewTask);
-                    Android.App.Application.Context.StartActivity(intent);
+                    Toast.Make("Word isn't installed, failed to open the document.", CommunityToolkit.Maui.Core.ToastDuration.Short, 12).Show();
                 }
-
             }
         }
     }

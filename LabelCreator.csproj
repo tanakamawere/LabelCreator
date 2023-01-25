@@ -12,10 +12,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>LabelCreator</ApplicationTitle>
+		<ApplicationTitle>Label Maker</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.labelcreator</ApplicationId>
+		<ApplicationId>com.tanakamawere.labelcreator</ApplicationId>
 		<ApplicationIdGuid>782243b4-a3da-41d1-a414-a5f94097bca1</ApplicationIdGuid>
 
 		<!-- Versions -->

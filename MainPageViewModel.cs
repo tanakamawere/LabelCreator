@@ -186,23 +186,9 @@ namespace LabelCreator
         {
             //Saves the memory stream as file.
             SaveService saveService = new();
-            saveService.SaveAndView("Sample5.docx", "application/msword", memoryStream);
+            saveService.SaveAndView($"{Guid.NewGuid()}.docx", "application/msword", memoryStream);
 
-            //bool permission = PermissionsService.CheckForStoragePermission().Result;
-
-            //if (permission == true)
-            //{
-            //    try
-            //    {
-            //        //Saves the memory stream as file.
-            //        SaveService saveService = new();
-            //        saveService.SaveAndView("Sample.docx", "application/msword", memoryStream);
-            //    }
-            //    catch (Exception)
-            //    {
-            //        await Toast.Make("Something went wrong", CommunityToolkit.Maui.Core.ToastDuration.Short, 12).Show();
-            //    }
-            //}
+            Snackbar.Make("Saved on your device!", null, "OK", TimeSpan.Parse("300")).Show();
         }
     }
 }
