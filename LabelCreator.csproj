@@ -12,10 +12,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>Label Maker</ApplicationTitle>
+		<ApplicationTitle>Label Base</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.tanakamawere.labelcreator</ApplicationId>
+		<ApplicationId>com.tanakamawere.labelbase</ApplicationId>
 		<ApplicationIdGuid>782243b4-a3da-41d1-a414-a5f94097bca1</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -58,6 +58,10 @@
 
 	<ItemGroup>
 	  <None Remove="Platforms\Android\Resources\xml\file_paths.xml" />
+	  <None Remove="Resources\Fonts\fabrands.otf" />
+	  <None Remove="Resources\Fonts\faregular.otf" />
+	  <None Remove="Resources\Fonts\fasolid.otf" />
+	  <None Remove="Resources\Images\flyout_image.jpg" />
 	</ItemGroup>
 
 	<ItemGroup>

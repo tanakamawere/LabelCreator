@@ -141,6 +141,7 @@
                         <Entry
                             HorizontalOptions="Center"
                             Placeholder="Enter subject"
+                            ReturnCommand="{Binding AddSubjectCommand}"
                             Text="{Binding Subject}"
                             WidthRequest="300" />
                         <Button Command="{Binding AddSubjectCommand}" Text="Add" />

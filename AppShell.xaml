@@ -3,12 +3,56 @@
     x:Class="LabelCreator.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fa="clr-namespace:LabelCreator.Services"
     xmlns:local="clr-namespace:LabelCreator"
-    Shell.FlyoutBehavior="Disabled">
+    Shell.FlyoutBehavior="Flyout">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid BackgroundColor="Black" HeightRequest="200">
+                <Image
+                    Aspect="AspectFill"
+                    Opacity="0.6"
+                    Source="flyout_image.jpg" />
+                <Label
+                    FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"
+                    Text="Label Base by Tanaka Mawere"
+                    TextColor="White"
+                    VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
 
+    <FlyoutItem>
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="fasolid" Glyph="{x:Static fa:FontAwesome.House}" />
+            </ShellContent.Icon>
+        </ShellContent>
+    </FlyoutItem>
+
+    <MenuItem Text="Donate through Ecocash">
+        <MenuItem.IconImageSource>
+            <FontImageSource FontFamily="fasolid" Glyph="{x:Static fa:FontAwesome.Gift}" />
+        </MenuItem.IconImageSource>
+    </MenuItem>
+
+    <Shell.FlyoutFooterTemplate>
+        <DataTemplate>
+            <StackLayout>
+                <Label FontAttributes="Bold" HorizontalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="+263785468923 | tanakamawere@outlook.com" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label HorizontalOptions="Center" Text="2023" />
+            </StackLayout>
+        </DataTemplate>
+    </Shell.FlyoutFooterTemplate>
 </Shell>
