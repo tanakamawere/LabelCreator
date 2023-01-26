@@ -9,17 +9,11 @@
 
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
-            <Grid BackgroundColor="Black" HeightRequest="200">
+            <Grid BackgroundColor="Black" HeightRequest="300">
                 <Image
                     Aspect="AspectFill"
                     Opacity="0.6"
-                    Source="flyout_image.jpg" />
-                <Label
-                    FontAttributes="Bold"
-                    HorizontalTextAlignment="Center"
-                    Text="Label Base by Tanaka Mawere"
-                    TextColor="White"
-                    VerticalTextAlignment="Center" />
+                    Source="banner.png" />
             </Grid>
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>
@@ -35,19 +29,44 @@
         </ShellContent>
     </FlyoutItem>
 
-    <MenuItem Text="Donate through Ecocash">
+    <MenuItem Clicked="HowToClicked" Text="How to">
         <MenuItem.IconImageSource>
-            <FontImageSource FontFamily="fasolid" Glyph="{x:Static fa:FontAwesome.Gift}" />
+            <FontImageSource
+                FontFamily="fasolid"
+                Glyph="{x:Static fa:FontAwesome.CircleQuestion}"
+                Color="{AppThemeBinding Light={StaticResource Gray600},
+                                        Dark={StaticResource Gray100}}" />
+        </MenuItem.IconImageSource>
+    </MenuItem>
+
+    <MenuItem Clicked="Donate" Text="Donate (RTGS$, ZWL$, USD$)">
+        <MenuItem.IconImageSource>
+            <FontImageSource
+                FontFamily="fasolid"
+                Glyph="{x:Static fa:FontAwesome.Gift}"
+                Color="{AppThemeBinding Light={StaticResource Gray600},
+                                        Dark={StaticResource Gray100}}" />
+        </MenuItem.IconImageSource>
+    </MenuItem>
+
+    <MenuItem Clicked="WhatsApp" Text="WhatsApp Developer">
+        <MenuItem.IconImageSource>
+            <FontImageSource
+                FontFamily="fabrands"
+                Glyph="{x:Static fa:FontAwesome.Whatsapp}"
+                Color="{AppThemeBinding Light={StaticResource Gray600},
+                                        Dark={StaticResource Gray100}}" />
         </MenuItem.IconImageSource>
     </MenuItem>
 
     <Shell.FlyoutFooterTemplate>
         <DataTemplate>
             <StackLayout>
+                <Label HorizontalOptions="Center" Text="Tanaka Mawere ©️" />
                 <Label FontAttributes="Bold" HorizontalOptions="Center">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="+263785468923 | tanakamawere@outlook.com" />
+                            <Span Text="tanakamawere@outlook.com" />
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>

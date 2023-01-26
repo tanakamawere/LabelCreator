@@ -12,10 +12,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>Label Base</ApplicationTitle>
+		<ApplicationTitle>Label Maker</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.tanakamawere.labelbase</ApplicationId>
+		<ApplicationId>com.tanakamawere.labelmaker</ApplicationId>
 		<ApplicationIdGuid>782243b4-a3da-41d1-a414-a5f94097bca1</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -40,7 +40,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -61,12 +61,15 @@
 	  <None Remove="Resources\Fonts\fabrands.otf" />
 	  <None Remove="Resources\Fonts\faregular.otf" />
 	  <None Remove="Resources\Fonts\fasolid.otf" />
+	  <None Remove="Resources\Images\banner.png" />
 	  <None Remove="Resources\Images\flyout_image.jpg" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="4.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.1" />
+		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 		<PackageReference Include="Syncfusion.DocIO.NET" Version="20.4.0.43" />

@@ -1,4 +1,8 @@
-﻿namespace LabelCreator;
+﻿using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+
+namespace LabelCreator;
 
 public partial class App : Application
 {
@@ -10,4 +14,11 @@ public partial class App : Application
 
 		MainPage = new AppShell();
 	}
+
+    protected override void OnStart()
+    {
+        AppCenter.Start("android=8368a73e-6e37-4eba-97f9-cdc4f8862358;" +
+                  "ios=8368a73e-6e37-4eba-97f9-cdc4f8862358;",
+                  typeof(Analytics), typeof(Crashes));
+    }
 }

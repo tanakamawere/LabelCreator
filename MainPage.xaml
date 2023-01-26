@@ -126,6 +126,7 @@
                     </CollectionView>
                     <Entry
                         HorizontalOptions="Center"
+                        Keyboard="Text"
                         Placeholder="Enter name"
                         ReturnCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=AddSubjectCommand}"
                         ReturnCommandParameter="{Binding .}"
@@ -133,6 +134,7 @@
                         WidthRequest="200" />
                     <Entry
                         HorizontalOptions="Center"
+                        Keyboard="Text"
                         Placeholder="Enter class"
                         Text="{Binding ClassTitle}"
                         WidthRequest="200" />
@@ -140,6 +142,7 @@
                     <HorizontalStackLayout>
                         <Entry
                             HorizontalOptions="Center"
+                            Keyboard="Text"
                             Placeholder="Enter subject"
                             ReturnCommand="{Binding AddSubjectCommand}"
                             Text="{Binding Subject}"
