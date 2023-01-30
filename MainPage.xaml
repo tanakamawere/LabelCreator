@@ -3,9 +3,18 @@
     x:Class="LabelCreator.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:services="clr-namespace:LabelCreator.Services"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:LabelCreator"
     x:DataType="vm:MainPageViewModel">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding OpenHowToCommand}" Text="How To">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="fasolid" Glyph="{x:Static services:FontAwesome.CircleQuestion}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
 
     <ScrollView Orientation="Vertical">
         <VerticalStackLayout
@@ -97,7 +106,7 @@
                 <VerticalStackLayout Spacing="20">
                     <CollectionView Margin="5" ItemsSource="{Binding Subjects}">
                         <CollectionView.ItemsLayout>
-                            <GridItemsLayout Orientation="Vertical" Span="3" />
+                            <GridItemsLayout Orientation="Vertical" Span="2" />
                         </CollectionView.ItemsLayout>
                         <CollectionView.EmptyView>
                             <ContentView>
@@ -125,26 +134,32 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                     <Entry
+                        x:Name="fullNameEntry"
+                        toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference classEntry}"
                         HorizontalOptions="Center"
                         Keyboard="Text"
-                        Placeholder="Enter name"
-                        ReturnCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=AddSubjectCommand}"
-                        ReturnCommandParameter="{Binding .}"
+                        Placeholder="Enter full name"
+                        ReturnType="Next"
                         Text="{Binding Name}"
-                        WidthRequest="200" />
+                        WidthRequest="300" />
                     <Entry
+                        x:Name="classEntry"
+                        toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference subjectEntry}"
                         HorizontalOptions="Center"
                         Keyboard="Text"
-                        Placeholder="Enter class"
+                        Placeholder="Enter class (eg: Grade 7 Silver)"
+                        ReturnType="Next"
                         Text="{Binding ClassTitle}"
-                        WidthRequest="200" />
+                        WidthRequest="300" />
 
                     <HorizontalStackLayout>
                         <Entry
+                            x:Name="subjectEntry"
                             HorizontalOptions="Center"
                             Keyboard="Text"
-                            Placeholder="Enter subject"
+                            Placeholder="Subject (Click subject to remove from list)"
                             ReturnCommand="{Binding AddSubjectCommand}"
+                            ReturnType="Done"
                             Text="{Binding Subject}"
                             WidthRequest="300" />
                         <Button Command="{Binding AddSubjectCommand}" Text="Add" />

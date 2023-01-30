@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="LabelCreator.Popups.LoadingPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    CanBeDismissedByTappingOutsideOfPopup="False"
+    Color="{AppThemeBinding Light={StaticResource White},
+                            Dark={StaticResource Gray600}}">
+    <VerticalStackLayout Padding="30">
+        <Label
+            x:Name="loadingPopupLabel"
+            FontSize="24"
+            HorizontalOptions="Center"
+            Text="Loading..."
+            VerticalOptions="Center" />
+        <ActivityIndicator
+            IsEnabled="True"
+            IsRunning="True"
+            IsVisible="True" />
+    </VerticalStackLayout>
+</toolkit:Popup>

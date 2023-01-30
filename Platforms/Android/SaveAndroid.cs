@@ -17,7 +17,8 @@ namespace LabelCreator.Services
 
             if (Android.OS.Environment.IsExternalStorageEmulated)
             {
-                root = Android.App.Application.Context!.GetExternalFilesDir(Android.OS.Environment.DirectoryDocuments)!.AbsolutePath;
+                //root = Android.App.Application.Context!.GetExternalFilesDir(Android.OS.Environment.DirectoryDocuments)!.AbsolutePath;
+                root = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDocuments).ToString();
             }
             else
                 root = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
@@ -35,8 +36,8 @@ namespace LabelCreator.Services
             try
             {
                 FileOutputStream outs = new(file);
-                outs.Write(stream.ToArray());
 
+                outs.Write(stream.ToArray());
                 outs.Flush();
                 outs.Close();
             }

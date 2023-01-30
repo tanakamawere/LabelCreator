@@ -5,6 +5,9 @@ using Syncfusion.DocIO.DLS;
 using Syncfusion.DocIO;
 using LabelCreator.Services;
 using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Views;
+using LabelCreator.Popups;
+using static Android.Provider.DocumentsContract;
 
 namespace LabelCreator
 {
@@ -47,6 +50,7 @@ namespace LabelCreator
         [ObservableProperty]
         bool hasYear = false;
         int numberOfLabelsPerPage = 3;
+        LoadingPopup loadingPopup;
 
         public MainPageViewModel()
         {
@@ -54,8 +58,19 @@ namespace LabelCreator
         }
 
         [RelayCommand]
-        void SaveDocumentClicked() =>
-            SaveDocument(CreateDocument());
+        void SaveDocumentClicked()
+        {
+            loadingPopup = new();
+            try
+            {
+                Shell.Current.ShowPopup(loadingPopup);
+                SaveDocument(CreateDocument());
+            }
+            finally
+            {
+                loadingPopup.Close();
+            }
+        }
 
         [RelayCommand]
         void AddSubject()
@@ -188,7 +203,16 @@ namespace LabelCreator
             SaveService saveService = new();
             saveService.SaveAndView($"{Guid.NewGuid()}.docx", "application/msword", memoryStream);
 
-            Snackbar.Make("Saved on your device!", null, "OK", TimeSpan.Parse("300")).Show();
+#if ANDROID
+            Shell.Current.ShowPopup(new NotificationPopup("Saved to the following location: Android/data/com.tanakamawere.labelcreator/files/Documents \n \n If you like the app, please consider donating to support the development of the application."));
+#endif
+
+        }
+
+        [RelayCommand]
+        async void OpenHowTo() 
+        {
+            await Shell.Current.ShowPopupAsync(new HowToPopup());
         }
     }
 }
