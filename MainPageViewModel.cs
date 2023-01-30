@@ -60,15 +60,13 @@ namespace LabelCreator
         [RelayCommand]
         void SaveDocumentClicked()
         {
-            loadingPopup = new();
-            try
+            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(classTitle) || Subjects.Count == 0)
             {
-                Shell.Current.ShowPopup(loadingPopup);
-                SaveDocument(CreateDocument());
+                Toast.Make("Some student details are missing.", CommunityToolkit.Maui.Core.ToastDuration.Long).Show();
             }
-            finally
+            else
             {
-                loadingPopup.Close();
+                SaveDocument(CreateDocument());
             }
         }
 

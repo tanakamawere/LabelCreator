@@ -8,14 +8,6 @@
     xmlns:vm="clr-namespace:LabelCreator"
     x:DataType="vm:MainPageViewModel">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding OpenHowToCommand}" Text="How To">
-            <ToolbarItem.IconImageSource>
-                <FontImageSource FontFamily="fasolid" Glyph="{x:Static services:FontAwesome.CircleQuestion}" />
-            </ToolbarItem.IconImageSource>
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>
-
     <ScrollView Orientation="Vertical">
         <VerticalStackLayout
             Margin="10"
