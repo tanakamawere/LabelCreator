@@ -102,17 +102,11 @@
                         </CollectionView.ItemsLayout>
                         <CollectionView.EmptyView>
                             <ContentView>
-                                <VerticalStackLayout>
-                                    <Image
-                                        Aspect="AspectFit"
-                                        MaximumWidthRequest="300"
-                                        Source="no_data.svg" />
-                                    <Label Text="No subjects entered yet..." />
-                                </VerticalStackLayout>
+                                <Label Text="No subjects entered yet..." />
                             </ContentView>
                         </CollectionView.EmptyView>
                         <CollectionView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="{x:Type x:String}">
                                 <Border MaximumWidthRequest="300">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10" />

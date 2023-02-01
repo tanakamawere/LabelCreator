@@ -7,7 +7,7 @@ using LabelCreator.Services;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Views;
 using LabelCreator.Popups;
-using static Android.Provider.DocumentsContract;
+using System.Collections.ObjectModel;
 
 namespace LabelCreator
 {
@@ -50,7 +50,6 @@ namespace LabelCreator
         [ObservableProperty]
         bool hasYear = false;
         int numberOfLabelsPerPage = 3;
-        LoadingPopup loadingPopup;
 
         public MainPageViewModel()
         {
