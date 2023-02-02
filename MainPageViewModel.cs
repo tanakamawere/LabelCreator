@@ -8,6 +8,10 @@ using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Views;
 using LabelCreator.Popups;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Maui.Storage;
+using System.Text;
+using Microsoft.Maui.Storage;
+using System.IO;
 
 namespace LabelCreator
 {
@@ -65,10 +69,9 @@ namespace LabelCreator
             }
             else
             {
-                SaveDocument(CreateDocument());
+                CreateDocument();
             }
         }
-
         [RelayCommand]
         void AddSubject()
         {
@@ -88,7 +91,7 @@ namespace LabelCreator
         [RelayCommand]
         void DeleteSubject(string subjectSelected) =>
             Subjects.Remove(subjectSelected);
-        private MemoryStream CreateDocument()
+        private async void CreateDocument()
         {
             //Creates a new document.
             using WordDocument document = new();
@@ -122,8 +125,16 @@ namespace LabelCreator
             using MemoryStream ms = new();
             //Saves the Word document to the memory stream.
             document.Save(ms, FormatType.Docx);
-            ms.Position = 0;
-            return ms;
+            try
+            {
+                //var fileLocation = await FileSaver.Default.SaveAsync($"{Guid.NewGuid()}.docx", memoryStream, new CancellationToken());
+                var someLocation = await FileSaver.SaveAsync($"{Guid.NewGuid()}.docx", ms, new CancellationToken());
+                Shell.Current.ShowPopup(new NotificationPopup($"Saved to the following location: {someLocation} \n \n If you like the app, please consider donating to support the development of the application."));
+            }
+            catch (Exception ex)
+            {
+                await Toast.Make($"File is not saved, {ex.Message}").Show();
+            }
         }
         static WSection SectionInstance(WordDocument document)
         {
@@ -192,18 +203,6 @@ namespace LabelCreator
             text2.CharacterFormat.FontName = FontSelected;
             text3.CharacterFormat.FontName = FontSelected;
             text4.CharacterFormat.FontName = FontSelected;
-        }
-
-        static void SaveDocument(MemoryStream memoryStream)
-        {
-            //Saves the memory stream as file.
-            SaveService saveService = new();
-            saveService.SaveAndView($"{Guid.NewGuid()}.docx", "application/msword", memoryStream);
-
-#if ANDROID
-            Shell.Current.ShowPopup(new NotificationPopup("Saved to the following location: Android/data/com.tanakamawere.labelcreator/files/Documents \n \n If you like the app, please consider donating to support the development of the application."));
-#endif
-
         }
 
         [RelayCommand]
