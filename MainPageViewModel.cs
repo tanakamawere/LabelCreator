@@ -3,15 +3,10 @@ using CommunityToolkit.Mvvm.Input;
 using MvvmHelpers;
 using Syncfusion.DocIO.DLS;
 using Syncfusion.DocIO;
-using LabelCreator.Services;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Views;
 using LabelCreator.Popups;
-using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Storage;
-using System.Text;
-using Microsoft.Maui.Storage;
-using System.IO;
 
 namespace LabelCreator
 {
@@ -127,7 +122,6 @@ namespace LabelCreator
             document.Save(ms, FormatType.Docx);
             try
             {
-                //var fileLocation = await FileSaver.Default.SaveAsync($"{Guid.NewGuid()}.docx", memoryStream, new CancellationToken());
                 var someLocation = await FileSaver.SaveAsync($"{Guid.NewGuid()}.docx", ms, new CancellationToken());
                 Shell.Current.ShowPopup(new NotificationPopup($"Saved to the following location: {someLocation} \n \n If you like the app, please consider donating to support the development of the application."));
             }
