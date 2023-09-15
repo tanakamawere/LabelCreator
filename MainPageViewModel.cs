@@ -48,6 +48,11 @@ namespace LabelCreator
         string selectedLineStyle = "Single";
         [ObservableProperty]
         bool hasYear = false;
+        [ObservableProperty]
+        bool isLabelFullPage = false;
+        [ObservableProperty]
+        bool hasImage = false;
+
         int numberOfLabelsPerPage = 3;
 
         public MainPageViewModel()
@@ -122,12 +127,29 @@ namespace LabelCreator
             document.Save(ms, FormatType.Docx);
             try
             {
-                var someLocation = await FileSaver.SaveAsync($"{Guid.NewGuid()}.docx", ms, new CancellationToken());
-                Shell.Current.ShowPopup(new NotificationPopup($"Saved to the following location: {someLocation} \n \n If you like the app, please consider donating to support the development of the application."));
+                var status = await Permissions.RequestAsync<Permissions.StorageRead>();
+                if (status != PermissionStatus.Granted)
+                {
+                    await Toast.Make("Storage permission is required to save the file.").Show();
+
+                    //ask user if they want to go the settings to grant permission
+                    var result = await Shell.Current.DisplayAlert("Storage Permission", "Storage permission is required to save the file. Do you want to go to settings to grant permission?", "Yes", "No");
+                    if (result.Equals(true))
+                    {
+                        AppInfo.Current.ShowSettingsUI();
+                    }
+                    else
+                        return;
+                }
+                else
+                {
+                    var someLocation = await FileSaver.SaveAsync($"{Guid.NewGuid()}.docx", ms, new CancellationToken());
+                    Shell.Current.ShowPopup(new NotificationPopup($"Saved to the following location: {someLocation} \n \n If you like the app, please consider donating to support the development of the application."));
+                }
             }
             catch (Exception ex)
             {
-                await Toast.Make($"File is not saved, {ex.Message}").Show();
+                await Toast.Make("File is not saved").Show();
             }
         }
         static WSection SectionInstance(WordDocument document)
@@ -200,7 +222,7 @@ namespace LabelCreator
         }
 
         [RelayCommand]
-        async void OpenHowTo() 
+        static async void OpenHowTo() 
         {
             await Shell.Current.ShowPopupAsync(new HowToPopup());
         }

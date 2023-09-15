@@ -39,18 +39,7 @@
         </MenuItem.IconImageSource>
     </MenuItem>
 
-
-    <MenuItem Clicked="Donate" Text="Donate (RTGS$, ZWL$, USD$)">
-        <MenuItem.IconImageSource>
-            <FontImageSource
-                FontFamily="fasolid"
-                Glyph="{x:Static fa:FontAwesome.Gift}"
-                Color="{AppThemeBinding Light={StaticResource Gray600},
-                                        Dark={StaticResource Gray100}}" />
-        </MenuItem.IconImageSource>
-    </MenuItem>
-
-    <MenuItem Clicked="WhatsApp" Text="Developer WhatsApp">
+    <MenuItem Clicked="DeveloperWebsite" Text="Developer Website">
         <MenuItem.IconImageSource>
             <FontImageSource
                 FontFamily="fabrands"
@@ -63,11 +52,11 @@
     <Shell.FlyoutFooterTemplate>
         <DataTemplate>
             <StackLayout>
-                <Label HorizontalOptions="Center" Text="Tanaka Mawere ©️" />
+                <Label HorizontalOptions="Center" Text="Tanaka Mawere" />
                 <Label FontAttributes="Bold" HorizontalOptions="Center">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="tanakamawere@outlook.com" />
+                            <Span Text="tanaka@tanakamawere.co.zw" />
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>

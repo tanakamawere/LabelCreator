@@ -3,6 +3,7 @@
     x:Class="LabelCreator.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:admob="clr-namespace:Plugin.MauiMTAdmob.Controls;assembly=Plugin.MauiMTAdmob"
     xmlns:services="clr-namespace:LabelCreator.Services"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:LabelCreator"
@@ -14,6 +15,10 @@
             HorizontalOptions="Center"
             Spacing="5">
             <!--  Label Formatting  -->
+            <admob:MTAdView
+                AdsId="ca-app-pub-7010150994074481/8980027191"
+                HeightRequest="100"
+                WidthRequest="500" />
             <toolkit:Expander IsExpanded="True">
                 <toolkit:Expander.Header>
                     <Label Margin="5" VerticalOptions="Center">
@@ -84,6 +89,10 @@
                     </Border>
                 </VerticalStackLayout>
             </toolkit:Expander>
+            <admob:MTAdView
+                AdsId="ca-app-pub-7010150994074481/8980027191"
+                HeightRequest="100"
+                WidthRequest="500" />
 
             <!--  Student Details  -->
             <Label
@@ -164,6 +173,10 @@
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Border>
+            <admob:MTAdView
+                AdsId="ca-app-pub-7010150994074481/8980027191"
+                HeightRequest="100"
+                WidthRequest="500" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

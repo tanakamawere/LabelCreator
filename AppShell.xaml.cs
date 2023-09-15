@@ -7,15 +7,13 @@ public partial class AppShell : Shell
 		InitializeComponent();
 	}
 
-    private void HowToClicked(object sender, EventArgs e)
+    private async void HowToClicked(object sender, EventArgs e)
     {
+        await Browser.OpenAsync("https://tanakamawere.notion.site/How-To-Use-Label-Creator-fc0f7dd113e34d93a79c360c95f783bb?pvs=4");
     }
-    private void Donate(object sender, EventArgs e)
+
+    private void DeveloperWebsite(object sender, EventArgs e)
     {
-        Browser.OpenAsync("https://www.paynow.co.zw/Payment/BillPaymentLink/?q=aWQ9MTU3MjgmYW1vdW50PTAuMDAmYW1vdW50X3F1YW50aXR5PTAuMDAmbD0w");
-    }
-    private void WhatsApp(object sender, EventArgs e)
-    {
-        Browser.OpenAsync("https://wa.me/263718086035");
+        Browser.OpenAsync("https://tanakamawere.co.zw");
     }
 }
